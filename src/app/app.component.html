@@ -1,37 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { Comment, CommentService } from './services/comment.service';
-import { Post, PostService } from './services/post.service';
-import { User, UserService } from './services/user.service';
+<div *ngIf="post" class="json post">
+  {{ post | json }}
+</div>
 
-@Component({
-  selector: 'my-app',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
-})
-export class AppComponent implements OnInit {
-  post: Post;
-  comments: Comment[];
-  user: User;
+<div *ngIf="user" class="json user">
+  {{ user | json }}
+</div>
 
-  constructor(
-    private postService: PostService,
-    private commentService: CommentService,
-    private userService: UserService
-  ) {}
-
-  ngOnInit(): void {
-    this.postService.getPost(1).subscribe(post => {
-      this.post = post;
-
-      this.userService.getUser(post.userId).subscribe(user => {
-        this.user = user;
-      });
-
-      this.commentService.getComments(post.id).subscribe(comments => {
-        this.comments = comments;
-      });
-    });
-  }
-}
+<div *ngIf="comments" class="json comments">
+  {{ comments | json }}
+</div>
